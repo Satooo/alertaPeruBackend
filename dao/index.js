@@ -40,6 +40,10 @@ const usuario = sequelize.define("usuario", {
     fechaNacimiento : {
         type : DataTypes.STRING(200),
         allowNull : false
+    },
+    esAdmin:{
+        type: DataTypes.STRING(200),
+        allowNull:true
     }
 }, {
     timestamps : false,

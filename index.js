@@ -18,6 +18,13 @@ app.get("/usuarios",async(req,res)=>{
 })
 
 app.post("/usuarios", async(req, resp) => {
+    console.log(req.body)
+    let esAdminBoolean="false"
+
+    if(req.body.esAdmin=="0328"){
+        esAdminBoolean="true"
+    }
+
     await usuario.create({
         user_id: crypto.randomUUID(),
         user: req.body.user,
@@ -26,7 +33,12 @@ app.post("/usuarios", async(req, resp) => {
         apellidos: req.body.apellidos,
         celular: req.body.celular,
         fechaNacimiento: req.body.fechaNacimiento,
-        id: req.body.id
+        id: req.body.id,
+        esAdmin: esAdminBoolean
+    })
+
+    resp.send({
+        esAdmin: esAdminBoolean 
     })
 })
 
@@ -150,6 +162,13 @@ app.post("/validacion_modificar",async(req,resp)=>{
 app.post("/incidente_borrar",async(req,resp)=>{
     console.log(req.body.id)
     let id= req.body.id
+
+    await validacion.destroy({
+        where:{
+            incidente_id:id
+        }
+    })
+    
     await incidente.destroy({
         where:{
             incidente_id:id
