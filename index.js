@@ -163,12 +163,20 @@ app.post("/incidente_borrar",async(req,resp)=>{
     console.log(req.body.id)
     let id= req.body.id
 
+    await incidente.update({
+        validacion_id:null
+    },{
+        where:{
+            incidente_id:id
+        }
+    })
+
     await validacion.destroy({
         where:{
             incidente_id:id
         }
     })
-    
+
     await incidente.destroy({
         where:{
             incidente_id:id
